@@ -7,8 +7,8 @@ Application to manage film producer for SmartUp.
 3) Open CMD with admin permissions
 
 	To run kafka:
-4) cd C:\kafka_2.12-2.3.0\bin
-4.1) zookeeper-security-migration.bat ..\..\Config\zookeeper.properties
-4.1) kafka-server-start.bat ..\..\Config\server.properties
+4) cd C:\kafka_2.12-2.3.0\bin\windows
+4.1) zookeeper-security-migration.bat ..\..\config\zookeeper.properties
+4.1) kafka-server-start.bat ..\..\config\server.properties
 
 

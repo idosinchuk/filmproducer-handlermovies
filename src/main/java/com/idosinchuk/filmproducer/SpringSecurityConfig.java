@@ -30,18 +30,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").anyRequest()
+				.authenticated().and().httpBasic().authenticationEntryPoint(authEntryPoint);
+
 		http.csrf().disable().authorizeRequests().antMatchers("/api/**")
-				.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").antMatchers("/admin/**")
-				.access("hasRole('ROLE_ADMIN')").anyRequest().authenticated().and().httpBasic()
+				.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").anyRequest().authenticated().and().httpBasic()
 				.authenticationEntryPoint(authEntryPoint);
+
 		http.headers().cacheControl().disable(); // Spring Security invalidated it in the response, must use this line
 													// to disable default cache control from Spring Security
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser(readProperty("username"))
-				.password(encoder.encode(readProperty("userpass"))).roles("USER").and()
-				.withUser(readProperty("useradmin")).password(encoder.encode(readProperty("adminpass"))).roles("ADMIN");
+
+		auth.inMemoryAuthentication().withUser(readProperty("spring.security.user.name"))
+				.password(encoder.encode(readProperty("spring.security.user.password"))).roles("USER").and()
+				.withUser(readProperty("spring.security.useradmin.name"))
+				.password(encoder.encode(readProperty("spring.security.useradmin.password"))).roles("ADMIN");
 	}
 }

@@ -18,9 +18,10 @@ public class CustomErrorType {
 		return errorMessage;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public static ResponseEntity returnResponsEntityError(String message) {
-		return new ResponseEntity(new CustomErrorType("An error occurred: " + message),
+		return new ResponseEntity<>(new CustomErrorType("An error occurred: " + message),
 				HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 }

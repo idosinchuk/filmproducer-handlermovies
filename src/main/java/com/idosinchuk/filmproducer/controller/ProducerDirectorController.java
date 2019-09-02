@@ -4,7 +4,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +46,6 @@ public class ProducerDirectorController {
 	ProducerDirectorService producerDirectorService;
 
 	@Autowired
-	private ModelMapper modelMapper;
-
-	@Autowired
 	KafkaProducer kafkaProducer;
 
 	@Value("${spring.kafka.consumer.group-id}")
@@ -76,7 +72,7 @@ public class ProducerDirectorController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 		}
 
 		Resources<ProducerDirectorResource> res = new Resources(producerDirector);
@@ -108,7 +104,7 @@ public class ProducerDirectorController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 		}
 
 		return new ResponseEntity<>(customMessage, HttpStatus.OK);

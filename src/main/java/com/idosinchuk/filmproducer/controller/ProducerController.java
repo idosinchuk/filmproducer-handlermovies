@@ -100,7 +100,7 @@ public class ProducerController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 		}
 
 		MultiValueMap<String, String> headers = new HttpHeaders();
@@ -134,12 +134,14 @@ public class ProducerController {
 			if (producer.getId() == 0)
 				producer = producerService.findProducerById(id);
 
+			return new ResponseEntity<>(producer, HttpStatus.OK);
+
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
+
 		}
 
-		return new ResponseEntity<>(producer, HttpStatus.OK);
 	}
 
 	/**
@@ -170,7 +172,7 @@ public class ProducerController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 		}
 
 		return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -205,7 +207,7 @@ public class ProducerController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 		}
 
 		return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -249,7 +251,7 @@ public class ProducerController {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private ResponseEntity<Resources> putAndPatch(ProducerRequestDTO producerRequestDTO, int id, int mode) {
 
 		logger.info("Process '{}' producer", (mode == 0 ? "put" : "patch"));
@@ -297,7 +299,7 @@ public class ProducerController {
 
 		} catch (Exception e) {
 			logger.error("An error occurred! {}", e.getMessage());
-			CustomErrorType.returnResponsEntityError(e.getMessage());
+			return CustomErrorType.returnResponsEntityError(e.getMessage());
 
 		}
 
