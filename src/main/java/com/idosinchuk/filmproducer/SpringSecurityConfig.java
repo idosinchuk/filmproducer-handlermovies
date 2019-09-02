@@ -28,6 +28,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
+	private static final String[] AUTH_WHITELIST = {
+
+			// -- swagger ui
+			"/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**" };
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -40,6 +45,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.headers().cacheControl().disable(); // Spring Security invalidated it in the response, must use this line
 													// to disable default cache control from Spring Security
+
+		// Allows swagger
+		http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
 	}
 
 	@Autowired
@@ -50,4 +58,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.withUser(readProperty("spring.security.useradmin.name"))
 				.password(encoder.encode(readProperty("spring.security.useradmin.password"))).roles("ADMIN");
 	}
+
 }
