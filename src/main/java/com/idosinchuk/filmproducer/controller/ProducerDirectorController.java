@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Controller
 @Api(value = "API Rest for manage directors.")
-@RequestMapping("/admin/v1/producerdirector")
+@RequestMapping("/admin/v1")
 public class ProducerDirectorController {
 	public static final Logger logger = LoggerFactory.getLogger(ProducerDirectorController.class);
 
@@ -60,10 +60,10 @@ public class ProducerDirectorController {
 	 * @return response with resource and status
 	 */
 	@SuppressWarnings("rawtypes")
-	@GetMapping
+	@GetMapping(path = "/producerdirectors")
 	@ResponseBody
 	@ApiOperation(value = "Retrieve list of all producer directors.")
-	public ResponseEntity<?> getAllProducerDirectors() {
+	public ResponseEntity<?> getProducerDirectors() {
 
 		List<ProducerDirectorResponseDTO> producerDirector = null;
 
@@ -88,10 +88,11 @@ public class ProducerDirectorController {
 	 * @param producerDirectorRequestDTO object to save
 	 * @return ResponseEntity with status and producerDirectorResponseDTO
 	 */
-	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "/producerdirector", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Add a producer director.")
-	public ResponseEntity<?> addProducerDirector(@RequestBody ProducerDirectorRequestDTO producerDirectorRequestDTO) {
+	public ResponseEntity<?> addProducerDirectors(@RequestBody ProducerDirectorRequestDTO producerDirectorRequestDTO) {
 
 		logger.info(("Process add new producer director"));
 		CustomMessage customMessage = new CustomMessage();

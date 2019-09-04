@@ -51,7 +51,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "API Rest for manage producers.")
-@RequestMapping(value = "/api/v1/producer")
+@RequestMapping(value = "/api/v1")
 public class ProducerController {
 
 	public static final Logger logger = LoggerFactory.getLogger(ProducerController.class);
@@ -83,7 +83,7 @@ public class ProducerController {
 	 * @param pageable paging fields
 	 * @return ResponseEntity with paged list of all producers, headers and status
 	 */
-	@GetMapping
+	@GetMapping(path = "/producers")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@ApiOperation(value = "Retrieve list of all producers according to the search criteria.")
@@ -117,10 +117,10 @@ public class ProducerController {
 	 * @param id producer identifier
 	 * @return ResponseEntity with status and producerResponseDTO
 	 */
-	@GetMapping(value = "/{id}")
+	@GetMapping(path = "/producers/{id}")
 	@ResponseBody
 	@ApiOperation(value = "Retrieve producer by the id.")
-	public ResponseEntity<?> getProducerById(@PathVariable("id") int id) {
+	public ResponseEntity<?> getProducers(@PathVariable("id") int id) {
 
 		logger.info("Fetching producer with ID {}", id);
 
@@ -150,10 +150,10 @@ public class ProducerController {
 	 * @param producerRequestDTO object to save
 	 * @return ResponseEntity with status and producerResponseDTO
 	 */
-	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "/producers", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Add a producer.")
-	public ResponseEntity<?> addProducer(@RequestBody ProducerRequestDTO producerRequestDTO) {
+	public ResponseEntity<?> addProducers(@RequestBody ProducerRequestDTO producerRequestDTO) {
 
 		logger.info(("Process add new producer"));
 
@@ -184,10 +184,11 @@ public class ProducerController {
 	 * @param producerRequestDTO object to save
 	 * @return ResponseEntity with status and producerResponseDTO
 	 */
-	@PostMapping(value = "/layered", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "/producers/layered", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Add a producer in kafka before and in the DB.")
-	public ResponseEntity<?> addLayeredProducer(@RequestBody ProducerRequestDTO producerRequestDTO) {
+	public ResponseEntity<?> addLayeredProducers(@RequestBody ProducerRequestDTO producerRequestDTO) {
 
 		logger.info(("Process add new producer"));
 
@@ -225,8 +226,9 @@ public class ProducerController {
 	 * @param producerRequestDTO object to update
 	 * @return ResponseEntity with resource and status
 	 */
-	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<?> putProducer(@PathVariable("id") int id,
+	@PutMapping(path = "producers/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<?> putProducers(@PathVariable("id") int id,
 			@RequestBody ProducerRequestDTO producerRequestDTO) {
 
 		return putAndPatch(producerRequestDTO, id, 0);
@@ -241,10 +243,11 @@ public class ProducerController {
 	 * @param producerRequestDTO object to update
 	 * @return ResponseEntity with resource and status
 	 */
-	@PatchMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PatchMapping(path = "/producers/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Update the producer.")
-	public ResponseEntity<?> updateProducer(@PathVariable("id") int id,
+	public ResponseEntity<?> updateProducers(@PathVariable("id") int id,
 			@RequestBody ProducerRequestDTO producerRequestDTO) {
 
 		return putAndPatch(producerRequestDTO, id, 1);
